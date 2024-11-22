@@ -1,9 +1,8 @@
-import dbConnect from '../../lib/mongodb';
-import User from '../../models/User';
+
 import { getCustomSession } from '../sessionCode';
 
 export default async function handler(req, res) {
-    await dbConnect();
+    
 
     const { username, password } = req.body;
     const user = await User.findOne({ username, password });

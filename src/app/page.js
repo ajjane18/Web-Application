@@ -87,7 +87,6 @@ export default function MyApp() {
       {showFirstPage &&
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
           {/* Content for the first page */}
-          <Register />
         </Box>
       }
 
