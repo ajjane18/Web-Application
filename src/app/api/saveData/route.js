@@ -1,19 +1,20 @@
-
-import { getCustomSession } from "../sessionCode.js";
+import { getCustomSession } from '../sessionCode.js'
 
 
 export async function GET(req, res) {
 
-  let session = await getCustomSession();
 
-  let customersRole = session.role;
+  let session = await getCustomSession()
 
-  console.log(customersRole);
+  session.role = 'customer'
 
-  let email = session.email;
+  session.email = 'mymail@mail.com'
 
-  console.log(email);
+  await session.save()
 
-  return Response.json({});
+  console.log('data saved');
+
+  return Response.json({})
 
 }
+

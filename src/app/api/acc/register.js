@@ -5,7 +5,7 @@ export async function GET(req, res) {
   
     // the api. This goes to the console.
   
-    console.log("in the putInCart api page")
+    console.log("in the acc/register api page")
   
     // get the values
   
@@ -13,10 +13,10 @@ export async function GET(req, res) {
   
     const { searchParams } = new URL(req.url)
   
-    const pname = searchParams.get('pname')
+    const pname = searchParams.get('username')
   
   
-    console.log(pname);
+    console.log(username);
   
   
    // =================================================
@@ -27,13 +27,9 @@ export async function GET(req, res) {
     const url = process.env.DB_ADDRESS
   
     const client = new MongoClient(url);
-  
-   
-  
    
   
     const dbName = 'app'; // database name
-  
   
     await client.connect();
   
@@ -41,22 +37,13 @@ export async function GET(req, res) {
   
     const db = client.db(dbName);
   
-    const collection = db.collection('shopping_cart'); // collection name
+    const collection = db.collection('login'); // collection name
   
-  
-  
-    var myobj = { pname: pname, username: username};
+    var myobj = { username: username, pass: pass};
   
     const insertResult = await collection.insertOne(myobj);
   
-  
-  
    //==========================================================
-  
-  
-  
-  
-  
   
     // at the end of the process we need to send something back.
   
