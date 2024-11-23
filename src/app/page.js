@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Login from '../app/smallapp/login';
 import Register from './smallapp/register';
+import Image from 'next/image'; // Assuming you're using Next.js
 
 export default function MyApp() {
   // State for controlling visibility of different sections
@@ -93,11 +92,8 @@ export default function MyApp() {
       {showLogin &&
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
           {/* Content for the login page */}
-
           <h2>Login</h2>
-          {/* Login form goes here */}
           <Login />
-
         </Box>
       }
 
@@ -105,10 +101,9 @@ export default function MyApp() {
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
           {data.map((item, i) => (
             <div style={{ padding: '20px' }} key={i}>
-              Unique ID: {item._id}
-              <br />
-              {item.prodN} - {item.prodN}
-              <br />
+              <Typography variant="h6">{item.prodN}</Typography>
+              <Image src={item.imageUrl} alt={item.prodN} width={150} height={150} />
+              <Typography variant="body1">Unique ID: {item._id}</Typography>
               <Button onClick={() => putInCart(item.prodN)} variant="outlined">Add to cart</Button>
             </div>
           ))}
