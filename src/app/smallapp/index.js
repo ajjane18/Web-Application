@@ -7,7 +7,9 @@ export default function Home() {
         <div>
 
             <h2>Christmas Deals</h2>
-
+            <img src = '/images/ChristmasDealB1.jpg'></img>
+            <img src = '/images/ChristmasDonutsDisplayed.jpg'></img>
+            <img src = '/images/ChristmasDealB2.jpg'></img>
 
         </div>
     </header>
