@@ -1,0 +1,155 @@
+/* This css part is to style the Christmas deals in the home section. */
+.Christmas-sec {
+    text-align: center;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: darkolivegreen;
+    padding: 30px;
+  }
+  
+  .home-Christmas-deals {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 30%;
+  }
+  
+  .home-Christmas-deals img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  
+  .home-Christmas-deals img:hover {
+    transform: scale(1.05);
+  }
+
+/* This part styles the box deal part of the home page */
+/* index.css */
+.boxDeal-sec {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .Dozendeal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Adjust the gap between the images */
+  }
+  
+  .Dozendeal img {
+    max-width: 40%;
+    height: auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  
+  .Dozendeal img:hover {
+    transform: scale(1.05);
+  }
+  
+
+/* This part is the deals 1 part of the home page */
+.deals1-sec {
+    text-align: center;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: darkolivegreen;
+    padding: 30px;
+  }
+  
+  .deals1 {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 30%;
+  }
+  
+  .deals1 img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  
+  .deals1 img:hover {
+    transform: scale(1.05);
+  }
+  
+/* This css part styles the tags in the home page */
+h1{
+    text-align: center;
+    font-size: 30px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+}
+
+h2{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 19px;
+    color:rgb(187, 187, 187);
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Styling the signup part */
+.Home-signup {
+    background-color: #383838;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .Home-signup:hover {
+    background-color: #000000;
+  }
+  
+/* Styling the footer of the page */
+.footer {
+    text-align: center;
+    background-color: #f8f8f8;
+    padding: 20px;
+  }
+  
+  .social-media{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+  }
+  
+  .social-media img {
+    width: 60px; /* Adjust the size as needed */
+    border-radius: 50%; /* Make the images circular */
+    padding: 10px; /* Space inside each image */
+    transition: transform 0.3s, background-color 0.3s;
+  }
+  
+  .Instagram {
+    background-color: #580372;
+  }
+  
+  .Twitter {
+    background-color: #1DA1F2;
+  }
+  
+  .Tiktok {
+    background-color: #000000;
+  }
+  
+  .social-media:hover img {
+    transform: scale(1.1);
+  }
+  

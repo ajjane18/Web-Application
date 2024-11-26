@@ -11,11 +11,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Login from '../app/smallapp/login';
 // import Register from './smallapp/register';
 import Home from '../app/smallapp/index';
+import Cart from '../app/smallapp/viewCart';
 
 export default function MyApp() {
   // State for controlling visibility of different sections
   const [showLogin, setShowLogin] = useState(false);
   const [showDash, setShowDash] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const [showFirstPage, setShowFirstPage] = useState(true);
   const [data, setData] = useState([]);
 
@@ -49,23 +51,33 @@ export default function MyApp() {
     setShowFirstPage(false);
     setShowLogin(true);
     setShowDash(false);
+    setShowCart(false);
   }
 
   function runShowDash() {
     setShowFirstPage(false);
     setShowLogin(false);
     setShowDash(true);
+    setShowCart(false);
   }
 
   function runShowFirst() {
     setShowFirstPage(true);
     setShowLogin(false);
     setShowDash(false);
+    setShowCart(false);
+  }
+
+  function runShowCart() {
+    setShowFirstPage(false);
+    setShowLogin(false);
+    setShowDash(false);
+    setShowCart(true);
   }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: '#810303' }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -80,8 +92,9 @@ export default function MyApp() {
             Krispy K App
           </Typography>
           <Button color="inherit" onClick={runShowFirst}>Home</Button>
-          <Button color="inherit" onClick={runShowLogin}>Login</Button>
-          <Button color="inherit" onClick={runShowDash}>Dashboard</Button>
+          <Button color="inherit" onClick={runShowLogin}>Account</Button>
+          <Button color="inherit" onClick={runShowDash}>Store</Button>
+          <Button color="inherit" onClick={runShowCart}>Cart</Button>
         </Toolbar>
       </AppBar>
 
@@ -116,6 +129,14 @@ export default function MyApp() {
           ))}
         </Box>
       )}
+
+      {showCart &&
+        <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
+          {/* Content for the Cart page */}
+          <h2>Cart</h2>
+          <Cart />
+        </Box>
+      }
     </Box>
   );
 }
