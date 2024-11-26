@@ -9,7 +9,8 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Login from '../app/smallapp/login';
-import Register from './smallapp/register';
+// import Register from './smallapp/register';
+import Home from '../app/smallapp/index';
 
 export default function MyApp() {
   // State for controlling visibility of different sections
@@ -76,9 +77,9 @@ export default function MyApp() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            MyApp
+            Krispy K App
           </Typography>
-          <Button color="inherit" onClick={runShowFirst}>First</Button>
+          <Button color="inherit" onClick={runShowFirst}>Home</Button>
           <Button color="inherit" onClick={runShowLogin}>Login</Button>
           <Button color="inherit" onClick={runShowDash}>Dashboard</Button>
         </Toolbar>
@@ -87,6 +88,7 @@ export default function MyApp() {
       {showFirstPage &&
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
           {/* Content for the first page */}
+          <Home />
         </Box>
       }
 

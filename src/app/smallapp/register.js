@@ -8,7 +8,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-export default function Home() {
+
+export default function RegisterForm() {
 
 const handleSubmit = (event) => {
 console.log("handling submit");
@@ -83,5 +84,5 @@ let email = data.get('email')
 let pass = data.get('pass')
 console.log("Sent email:" + email)
 console.log("Sent pass:" + pass)
-runDBCallAsync(`http://localhost:3000/api/login?email=${email}&pass=${pass}`)
+runDBCallAsync(`../api/login?email=${email}&pass=${pass}`)
 }; // end handle submit
