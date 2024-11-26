@@ -95,27 +95,27 @@ export default function MyApp() {
       {showLogin &&
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
           {/* Content for the login page */}
-
           <h2>Login</h2>
           {/* Login form goes here */}
           <Login />
-
         </Box>
       }
 
-      {showDash &&
+      {showDash && (
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
           {data.map((item, i) => (
             <div style={{ padding: '20px' }} key={i}>
               Unique ID: {item._id}
               <br />
-              {item.prodN} - {item.prodN}
+              {item.prodN} - {item.prodP}
+              <br />
+              <img src={item.ImgUrl} alt={item.prodN} style={{ width: '100px', height: '100px' }} />
               <br />
               <Button onClick={() => putInCart(item.prodN)} variant="outlined">Add to cart</Button>
             </div>
           ))}
         </Box>
-      }
+      )}
     </Box>
   );
 }
