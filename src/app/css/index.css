@@ -86,25 +86,37 @@
   }
   
 /* This css part styles the tags in the home page */
-h1{
+#home-h1{
     text-align: center;
     font-size: 30px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
 }
 
-h2{
+#home-h2{
     font-family: 'Courier New', Courier, monospace;
     font-size: 19px;
-    color:rgb(187, 187, 187);
+    color:rgb(107, 106, 106);
+    font-weight: bolder;
     background-color: rgb(255, 255, 255);
+    border-color: #000000;
+    border-style: dashed;
+    border-width: 2px;
     padding: 20px;
     margin-bottom: 20px;
 }
 
+#home-h3{
+  font-family: 'Times New Roman', Times, serif;
+  color: #8d8d8d;
+}
+
+#home-p{
+  color:#ffffff;
+}
+
 /* Styling the signup part */
 .Home-signup {
-    background-color: #383838;
-    color: white;
+    color: rgb(97, 97, 97);
     border: none;
     padding: 10px 20px;
     cursor: pointer;
@@ -112,14 +124,21 @@ h2{
     margin-top: 20px;
   }
   
-  .Home-signup:hover {
-    background-color: #000000;
+  #home-Register{
+    color:#000000;
+    border-style: groove;
+    border-width: 1px;
+    border-color: #002003;
+    padding: 1px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
   }
-  
+
 /* Styling the footer of the page */
 .footer {
     text-align: center;
-    background-color: #f8f8f8;
+    background-color: #810303;
     padding: 20px;
   }
   
@@ -138,18 +157,17 @@ h2{
   }
   
   .Instagram {
-    background-color: #580372;
+    background-color: #ffffff;
   }
   
   .Twitter {
-    background-color: #1DA1F2;
+    background-color: #ffffff;
   }
   
   .Tiktok {
-    background-color: #000000;
+    background-color: #ffffff;
   }
   
   .social-media:hover img {
     transform: scale(1.1);
   }
-  

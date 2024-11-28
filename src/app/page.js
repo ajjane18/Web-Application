@@ -9,19 +9,18 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Login from '../app/smallapp/login';
-// import Register from './smallapp/register';
 import Home from '../app/smallapp/index';
-import Cart from '../app/smallapp/viewCart';
+import ViewCart from '../app/smallapp/viewCart';
+import '../app/css/dash.css';
 
 export default function MyApp() {
-  // State for controlling visibility of different sections
   const [showLogin, setShowLogin] = useState(false);
   const [showDash, setShowDash] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [showFirstPage, setShowFirstPage] = useState(true);
   const [data, setData] = useState([]);
+  const [cart, setCart] = useState({ items: [], total: 0 });
 
-  // Fetch products from the backend
   useEffect(() => {
     fetch('../api/getProducts')
       .then((res) => res.json())
@@ -34,16 +33,34 @@ export default function MyApp() {
       });
   }, []);
 
-  // Function for putting items into the shopping cart
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  function fetchCart() {
+    fetch('../api/getCart')
+      .then(response => response.json())
+      .then(data => {
+        setCart({
+          items: data.items,
+          total: data.items.reduce((sum, item) => sum + item.prodP, 0)
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching cart:', error);
+      });
+  }
+
   function putInCart(prodN) {
     console.log("Putting in cart:", prodN);
     fetch(`../api/putInCart?prodN=${prodN}`)
       .then(response => response.json())
       .then(data => {
-        console.log('Product added to cart:', data); // Debugging log
+        console.log('Product added to cart:', data);
+        fetchCart(); // Update cart after adding an item
       })
       .catch(error => {
-        console.error('Error adding product to cart:', error); // Error handling
+        console.error('Error adding product to cart:', error);
       });
   }
 
@@ -100,29 +117,29 @@ export default function MyApp() {
 
       {showFirstPage &&
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-          {/* Content for the first page */}
           <Home />
         </Box>
       }
 
       {showLogin &&
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-          {/* Content for the login page */}
           <h2>Login</h2>
-          {/* Login form goes here */}
           <Login />
         </Box>
       }
 
       {showDash && (
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
+          <h1 id='dash-h1'>Products</h1>
           {data.map((item, i) => (
             <div style={{ padding: '20px' }} key={i}>
               Unique ID: {item._id}
               <br />
-              {item.prodN} - {item.prodP}
+              {item.prodN}
               <br />
-              <img src={item.ImgUrl} alt={item.prodN} style={{ width: '100px', height: '100px' }} />
+              <img src={item.imageUrl} alt={item.prodN} style={{ width: '100px', height: '100px' }} />
+              <br />
+              {item.prodP} euro
               <br />
               <Button onClick={() => putInCart(item.prodN)} variant="outlined">Add to cart</Button>
             </div>
@@ -132,9 +149,8 @@ export default function MyApp() {
 
       {showCart &&
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-          {/* Content for the Cart page */}
           <h2>Cart</h2>
-          <Cart />
+          <ViewCart />
         </Box>
       }
     </Box>

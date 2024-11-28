@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
 
@@ -6,7 +8,7 @@ const ViewCart = () => {
 
   useEffect(() => {
     async function fetchCart() {
-      const response = await fetch('/api/getCart');
+      const response = await fetch('../api/getCart');
       const data = await response.json();
       setCart({
         items: data.items,
@@ -23,7 +25,7 @@ const ViewCart = () => {
       <List>
         {cart.items.map((item, index) => (
           <ListItem key={index}>
-            <ListItemText primary={item.pname} secondary={`Price: ${item.price}`} />
+            <ListItemText primary={item.prodN} secondary={`Price: ${item.prodP || 0} euro`} />
           </ListItem>
         ))}
       </List>
