@@ -1,16 +1,12 @@
 import { getIronSession } from 'iron-session';
+import { cookies } from 'next/headers';
 
-import { cookies } from 'next/headers'
+export async function getCustomSession() {
+  console.log("loading session stuff");
 
-export async function getCustomSession(){
+  let pw = "VIi8pH38vD8ZLgEZclSa7an3olx4pkh6pvBj9fGZf";
 
-    console.log("loading session stuff")
+  const session = await getIronSession(cookies(), { password: pw, cookieName: "app" });
 
-    let pw = "VIi8pH38vD8ZLgEZclSa7an3olx4pkh6pvBj9fGZf"
-
-    const session = await getIronSession(cookies(), { password: pw, cookieName: "app" });
-
-    return session
-
+  return session;
 }
-
