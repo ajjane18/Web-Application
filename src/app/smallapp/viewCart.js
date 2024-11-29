@@ -1,7 +1,7 @@
-'use client';  // Indicates that this file is client-side code
+'use client';
 
-import React, { useEffect, useState } from 'react';  // Import necessary React hooks
-import { Container, Typography, List, ListItem, ListItemText, Button } from '@mui/material';  // Import components from Material-UI
+import React, { useEffect, useState } from 'react';
+import { Container, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
 
 // Functional component for viewing the cart
 const ViewCart = () => {
@@ -53,7 +53,7 @@ const ViewCart = () => {
   return (
     <Container>
       <Typography variant="h4">Your Cart</Typography>
-      <List>
+      <List id = 'item-cart'>
         {cart.items.map((item, index) => (
           <ListItem key={index}>
             <ListItemText

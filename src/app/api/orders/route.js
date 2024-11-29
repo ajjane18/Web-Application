@@ -56,13 +56,13 @@ export async function GET(req, res) {
       console.log('Cart items deletion result:', deleteResult);
 
       await client.close();
-      return res.status.json({ data: "Order placed successfully" });
+      return res.status(200).json({ data: "Order placed successfully" });
     } else {
       await client.close();
-      return res.status.json({ error: "Shopping cart is empty" });
+      return res.status(200).json({ error: "Shopping cart is empty" });
     }
   } catch (error) {
     console.error("Error occurred:", error);
-    return res.status.json({ error: "Internal Server Error", details: error.stack });
+    return res.status(500).json({ error: "Internal Server Error", details: error.stack });
   }
 }

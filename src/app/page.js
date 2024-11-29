@@ -149,7 +149,6 @@ export default function MyApp() {
 
       {showCart &&
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-          <h2>Cart</h2>
           <ViewCart />
         </Box>
       }

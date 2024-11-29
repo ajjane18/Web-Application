@@ -1,43 +1,60 @@
-import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Box, Checkbox, FormControlLabel } from '@mui/material';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Container, Box, Checkbox, FormControlLabel, Link } from '@mui/material';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [pass, setPass] = useState('');
+  const [message, setMessage] = useState('');
   const [redirectUrl, setRedirectUrl] = useState('');
 
-  const handleSubmit = (event) => {
-    console.log("Handling submit");
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let username = data.get('username');
-    let pass = data.get('pass');
-    console.log("Sent username: " + username);
-    console.log("Sent password: " + pass);
 
-    runDBCallAsync(`/api/login?username=${username}&pass=${pass}`);
+    try {
+      const response = await fetch('../api/acc', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, pass }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
+      }
+
+      const data = await response.json();
+      await saveSessionData(data.role, username);
+
+      if (data.role === 'manager') {
+        setRedirectUrl('/smallapp/manager');
+      } else {
+        setRedirectUrl('/smallapp/customer');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setMessage(error.message || 'Login failed');
+    }
   };
 
-  async function runDBCallAsync(url) {
-    const res = await fetch(url);
-    const data = await res.json();
-    if(data.role != null) {
-      console.log("Login is valid!");
-      await saveSessionData(data.role, username);
-      if (data.role === 'manager') {
-        setRedirectUrl('../smallapp/manager');
-      } else {
-        setRedirectUrl('../smallapp/customer');
-      }
-    } else {
-      console.log("Not valid");
-      alert('Login failed. Please check your credentials and try again.');
-    }
-  }
+  const saveSessionData = async (role, username) => {
+    await fetch('../api/saveData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ role, username }),
+    });
+  };
 
-  async function saveSessionData(role, username) {
-    await axios.post('../api/saveData', { role, username });
-  }
+  useEffect(() => {
+    if (redirectUrl) {
+      document.getElementById('redirectLink').click();
+    }
+  }, [redirectUrl]);
 
   return (
     <Container maxWidth="sm">
@@ -52,6 +69,8 @@ const LoginForm = () => {
             name="username"
             autoComplete="username"
             autoFocus
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -62,6 +81,8 @@ const LoginForm = () => {
             type="password"
             id="pass"
             autoComplete="current-password"
+            value={pass}
+            onChange={(e) => setPass(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -75,6 +96,8 @@ const LoginForm = () => {
           >
             Login
           </Button>
+          {message && <p>{message}</p>}
+          {redirectUrl && <Link id="redirectLink" href={redirectUrl} style={{ display: 'none' }}>Redirect</Link>}
         </Box>
       </Box>
     </Container>

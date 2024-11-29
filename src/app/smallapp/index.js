@@ -7,6 +7,7 @@ export default function Home() {
       <h1 id = 'home-h1'>Welcome to the Krispy Kreme app!</h1>
       <div className='Christmas-sec'>
         <h2 id = 'home-h2'>Christmas Deals</h2>
+        <h3 id = 'home-xmas-h3'>Coming Soon a Christmas feel, don't be late or you'll miss the deal!!</h3>
         <div className='home-Christmas-deals'>
           <img src='/images/ChristmasDealB1.jpg' alt='Christmas Deal 1' />
           <img src='/images/ChristmasDonutsDisplayed.jpg' alt='Christmas Donuts Displayed' />
