@@ -33,7 +33,7 @@ const Customer = () => {
     return (
         <Container>
             <Typography variant="h4">Products</Typography>
-            <Typography variant="h6">Weather: {weather?.main?.temp}°C</Typography>
+            <h2 id ='weather'>Today's temperature: {JSON.stringify(weather.temp)}</h2>
             <Grid container spacing={3}>
                 <ProductList products={products} />
             </Grid>

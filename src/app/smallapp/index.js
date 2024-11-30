@@ -33,31 +33,6 @@ export default function Home() {
           <img src='/images/strawberryDonut.png' alt='Strawberry donut' />
         </div>
       </div>
-      
-      <section className='Home-signup'>
-        <h3 id = 'home-h3'>Not Signed In Yet?</h3>
-        {/* Signup/Register link*/}
-        <a id = 'home-Register' href = '../smallapp/register.js'>Register Here!</a>
-        </section> 
-         
-        <footer className="footer">
-          <div className = 'con-foot'>
-          <p id = 'home-p'>Follow Krispy Kremes social media or more updates!</p>
-          {/* Social Media Icons */}
-          <div className="social-media">
-            <a href='https://www.instagram.com/KrispyKreme/' className="Instagram">
-              <img src='/images/soc/insta.png' alt='Instagram' />
-            </a>
-            <a href='https://x.com/krispykreme' className="Twitter">
-              <img src='/images/soc/Twitter.png' alt='Twitter' />
-            </a>
-            <a href='https://www.tiktok.com/@krispykreme' className="Tiktok">
-              <img src='/images/soc/tiktok.jpg' alt='Tiktok' />
-            </a>
-          </div>
-          </div>
-      </footer>
-
     </header>
   );
 }

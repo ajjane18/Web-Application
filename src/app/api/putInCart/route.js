@@ -23,7 +23,7 @@ export async function GET(req) {
 
     // Retrieve the session and get the username
     let session = await getCustomSession();
-    const username = session.email || 'defaultUser'; // Use email or any other session attribute for username
+    const username = session.email || 'defaultUser';
 
     if (product) {
       const shoppingCartCollection = db.collection('shopping_cart');
@@ -39,7 +39,7 @@ export async function GET(req) {
       console.log("Product not found");
     }
 
-    await client.close(); // Ensure the client is closed
+    await client.close();
 
     return new Response(JSON.stringify({ data: "inserted" }), {
       headers: { 'Content-Type': 'application/json' }

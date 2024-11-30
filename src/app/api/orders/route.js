@@ -4,9 +4,7 @@ import { getCustomSession } from '../sessionCode.js';
 // Handler for GET requests to place an order
 export async function GET(req, res) {
   try {
-    const url = process.env.DB_ADDRESS;  // Database address from environment variables
-    if (!url) throw new Error('Database address not found in environment variables');
-    console.log('Connecting to database at:', url);
+    const url = process.env.DB_ADDRESS;
 
     const client = new MongoClient(url);
     const dbName = 'app';
@@ -17,7 +15,6 @@ export async function GET(req, res) {
     // Retrieve the session and get the username
     let session = await getCustomSession();
     console.log('Session details:', session);
-    if (!session) throw new Error('Failed to retrieve session');
 
     const username = session.email || 'defaultUser';
     console.log('Username:', username);
@@ -39,7 +36,6 @@ export async function GET(req, res) {
         objectId: item._id
       }));
 
-      // Create order object with purchase date
       const order = {
         items: productDetails,
         totalPrice: totalPrice,
@@ -56,13 +52,28 @@ export async function GET(req, res) {
       console.log('Cart items deletion result:', deleteResult);
 
       await client.close();
-      return res.status(200).json({ data: "Order placed successfully" });
+      console.log("Order placed successfully");
+
+      // Return a plain text response indicating success
+      return new Response('Order placed successfully', {
+        status: 200,
+        headers: { 'Content-Type': 'text/plain' }
+      });
     } else {
       await client.close();
-      return res.status(200).json({ error: "Shopping cart is empty" });
+      console.log("Shopping cart is empty");
+      
+      // Return a plain text response indicating an empty cart
+      return new Response('Shopping cart is empty', {
+        status: 200,
+        headers: { 'Content-Type': 'text/plain' }
+      });
     }
   } catch (error) {
     console.error("Error occurred:", error);
-    return res.status(500).json({ error: "Internal Server Error", details: error.stack });
+    return new Response('Internal Server Error', {
+      status: 500,
+      headers: { 'Content-Type': 'text/plain' }
+    });
   }
 }

@@ -166,14 +166,17 @@
   
   .Instagram {
     background-color: #ffffff;
+    border-radius: 50%;
   }
   
   .Twitter {
     background-color: #ffffff;
+    border-radius: 50%;
   }
   
   .Tiktok {
     background-color: #ffffff;
+    border-radius: 50%;
   }
   
   .social-media:hover img {

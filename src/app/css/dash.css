@@ -2,7 +2,28 @@
     text-align: center;
     font-size: 30px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+    border-style: dashed;
+    border-width: 1px;
 }
+
+#products{
+    text-align: center;
+    margin: 20px;
+    display: block;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(91, 103, 72);
+    border-radius: 20%;
+    color: white;
+    padding: 30px;
+}
+
+#products-cart{
+    color: rgb(0, 0, 0);
+    background-color: white;
+    border-color: black;
+}
+
 
 #item-cart{
     background-color: #858585;
@@ -10,3 +31,9 @@
     border-width: 3px;
     border-color: rgb(0, 0, 0);
 }
+
+#weather{
+    text-align: center;
+    background-color: #858585;
+}
+

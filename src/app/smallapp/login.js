@@ -6,34 +6,38 @@ import { TextField, Button, Container, Box, Checkbox, FormControlLabel, Link } f
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [pass, setPass] = useState('');
+  const [acc_type, setacc_type] = useState('');
   const [message, setMessage] = useState('');
   const [redirectUrl, setRedirectUrl] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    console.log('Form submitted:', { username, pass, acc_type });
+
     try {
-      const response = await fetch('../api/acc', {
+      const response = await fetch(`../api/acc/login?username=${username}&pass=${pass}&acc_type=${acc_type}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, pass }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+        const errorMessage = await response.text();
+        console.log('Response not OK:', errorMessage);
+        throw new Error(errorMessage || 'Login failed');
       }
 
-      const data = await response.json();
-      await saveSessionData(data.role, username);
+      const data = await response.text();
+      console.log('Login successful:', data);
 
+      await saveSessionData('role-placeholder', username);
+      
       if (data.role === 'manager') {
         setRedirectUrl('/smallapp/manager');
-      } else {
+      }
+      if (data.role === 'customer'){
         setRedirectUrl('/smallapp/customer');
       }
+
     } catch (error) {
       console.error('Error during login:', error);
       setMessage(error.message || 'Login failed');
@@ -41,12 +45,9 @@ const LoginForm = () => {
   };
 
   const saveSessionData = async (role, username) => {
-    await fetch('../api/saveData', {
+    const searchParams = new URLSearchParams({ role, username });
+    await fetch(`../api/saveData?${searchParams}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ role, username }),
     });
   };
 

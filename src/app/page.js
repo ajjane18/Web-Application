@@ -132,16 +132,16 @@ export default function MyApp() {
         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
           <h1 id='dash-h1'>Products</h1>
           {data.map((item, i) => (
-            <div style={{ padding: '20px' }} key={i}>
-              Unique ID: {item._id}
-              <br />
+            <div id = 'products' style={{ padding: '20px' }} key={i}>
+              {/* Unique ID: {item._id}
+              <br /> */}
               {item.prodN}
               <br />
               <img src={item.imageUrl} alt={item.prodN} style={{ width: '100px', height: '100px' }} />
               <br />
               {item.prodP} euro
               <br />
-              <Button onClick={() => putInCart(item.prodN)} variant="outlined">Add to cart</Button>
+              <Button id = 'products-cart' onClick={() => putInCart(item.prodN)} variant="outlined">Add to cart</Button>
             </div>
           ))}
         </Box>
@@ -152,6 +152,30 @@ export default function MyApp() {
           <ViewCart />
         </Box>
       }
+      <section className='Home-signup'>
+        <h3 id = 'home-h3'>Not Signed In Yet?</h3>
+        {/* Signup/Register link*/}
+        <a id = 'home-Register' href = '../smallapp/register.js'>Register Here!</a>
+        </section> 
+         
+        <footer className="footer">
+          <div className = 'con-foot'>
+          <p id = 'home-p'>Follow Krispy Kremes social media or more updates!</p>
+          {/* Social Media Icons */}
+          <div className="social-media">
+            <a href='https://www.instagram.com/KrispyKreme/' className="Instagram">
+              <img src='/images/soc/insta.png' alt='Instagram' />
+            </a>
+            <a href='https://x.com/krispykreme' className="Twitter">
+              <img src='/images/soc/Twitter.png' alt='Twitter' />
+            </a>
+            <a href='https://www.tiktok.com/@krispykreme' className="Tiktok">
+              <img src='/images/soc/tiktok.jpg' alt='Tiktok' />
+            </a>
+          </div>
+          </div>
+      </footer>
+
     </Box>
   );
 }
