@@ -1,33 +1,39 @@
+// Importing React library
 import React from 'react';
+// Importing CSS styles for the component
 import '../css/index.css';
 
+// Defining the Home component
 export default function Home() {
   return (
     <header>
-      <h1 id = 'home-h1'>Welcome to the Krispy Kreme app!</h1>
+      <h1 id='home-h1'>Welcome to the Krispy Kreme app!</h1>
       <div className='Christmas-sec'>
-        <h2 id = 'home-h2'>Christmas Deals</h2>
-        <h3 id = 'home-xmas-h3'>Coming Soon a Christmas feel, don't be late or you'll miss the deal!!</h3>
+        <h2 id='home-h2'>Christmas Deals</h2>
+        <h3 id='home-xmas-h3'>Coming Soon a Christmas feel, don't be late or you'll miss the deal!!</h3>
         <div className='home-Christmas-deals'>
+          {/* Displaying images for Christmas deals */}
           <img src='/images/ChristmasDealB1.jpg' alt='Christmas Deal 1' />
           <img src='/images/ChristmasDonutsDisplayed.jpg' alt='Christmas Donuts Displayed' />
           <img src='/images/ChristmasDealB2.jpg' alt='Christmas Deal 2' />
         </div>
       </div>
 
-      <br/>
+      <br />
       <div className='boxDeal-sec'>
-        <h2 id = 'home-h2'>Dozen Box Deals</h2>
+        <h2 id='home-h2'>Dozen Box Deals</h2>
         <div className='Dozendeal'>
+          {/* Displaying images for dozen box deals */}
           <img src='/images/DozenDeals.jpg' alt='Dozen Assorted Box deal' />
           <img src='/images/DozenGDeal.png' alt='Dozen Glazed Box deal' />
         </div>
       </div>
 
-      <br/>
+      <br />
       <div className='deals1-sec'>
-        <h2 id = 'home-h2'>Deals</h2>
+        <h2 id='home-h2'>Deals</h2>
         <div className='deals1'>
+          {/* Displaying images for various deals */}
           <img src='/images/cook&kremeS.png' alt='Cookies and Kreme single donut' />
           <img src='/images/lotusBiscoff.png' alt='Lotus Biscoff Donuts' />
           <img src='/images/strawberryDonut.png' alt='Strawberry donut' />

@@ -1,22 +1,24 @@
+// 'use client' directive for React components in a client-side environment
 'use client';
 
+// Importing necessary modules from 'react' and '@mui/material'
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Box, Checkbox, FormControlLabel, Link } from '@mui/material';
 
-const LoginForm = () => {
+// Defining the LoginForm component
+const LoginForm = ({ onLogin }) => {
+  // State variables to manage username, password, and error message
   const [username, setUsername] = useState('');
   const [pass, setPass] = useState('');
-  const [acc_type, setacc_type] = useState('');
   const [message, setMessage] = useState('');
-  const [redirectUrl, setRedirectUrl] = useState('');
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log('Form submitted:', { username, pass, acc_type });
-
     try {
-      const response = await fetch(`../api/acc/login?username=${username}&pass=${pass}&acc_type=${acc_type}`, {
+      // Sending a POST request to the login API with the username and password
+      const response = await fetch(`../api/acc/login?username=${username}&pass=${pass}`, {
         method: 'POST',
       });
 
@@ -26,41 +28,23 @@ const LoginForm = () => {
         throw new Error(errorMessage || 'Login failed');
       }
 
-      const data = await response.text();
+      // Parsing the JSON response
+      const data = await response.json();
+      onLogin(data.role); // Pass the role to the parent component
+
       console.log('Login successful:', data);
-
-      await saveSessionData('role-placeholder', username);
-      
-      if (data.role === 'manager') {
-        setRedirectUrl('/smallapp/manager');
-      }
-      if (data.role === 'customer'){
-        setRedirectUrl('/smallapp/customer');
-      }
-
     } catch (error) {
-      console.error('Error during login:', error);
+      // Handle errors during login
+      console.log('Error during login:', error);
       setMessage(error.message || 'Login failed');
     }
   };
-
-  const saveSessionData = async (role, username) => {
-    const searchParams = new URLSearchParams({ role, username });
-    await fetch(`../api/saveData?${searchParams}`, {
-      method: 'POST',
-    });
-  };
-
-  useEffect(() => {
-    if (redirectUrl) {
-      document.getElementById('redirectLink').click();
-    }
-  }, [redirectUrl]);
 
   return (
     <Container maxWidth="sm">
       <Box sx={{ height: '100vh' }}>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          {/* Text field for entering username */}
           <TextField
             margin="normal"
             required
@@ -73,6 +57,7 @@ const LoginForm = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          {/* Text field for entering password */}
           <TextField
             margin="normal"
             required
@@ -85,10 +70,12 @@ const LoginForm = () => {
             value={pass}
             onChange={(e) => setPass(e.target.value)}
           />
+          {/* Checkbox for remembering the user */}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
+          {/* Button to submit the form */}
           <Button
             type="submit"
             fullWidth
@@ -97,12 +84,13 @@ const LoginForm = () => {
           >
             Login
           </Button>
+          {/* Display an error message if login fails */}
           {message && <p>{message}</p>}
-          {redirectUrl && <Link id="redirectLink" href={redirectUrl} style={{ display: 'none' }}>Redirect</Link>}
         </Box>
       </Box>
     </Container>
   );
 };
 
+// Exporting the LoginForm component as the default export
 export default LoginForm;
