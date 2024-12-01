@@ -69,13 +69,13 @@ const Customer = () => {
                 </Typography>
                 <Typography variant="h6">
                   {/* Displaying the total cost of the order */}
-                  Your total: {order.items.reduce((total, item) => total + parseFloat(item.prodP), 0)} euro
+                  Your total: {order.items.reduce((total, item) => total + parseFloat(item.prodP), 0).toFixed(2)} euro
                 </Typography>
                 <Box sx={{ mt: 2 }}>
                   {/* Displaying each item in the order */}
                   {order.items.map((item, i) => (
                     <Typography key={i}>
-                      {item.prodN} - {item.prodP} euro
+                      {item.prodN} - {parseFloat(item.prodP).toFixed(2)} euro
                     </Typography>
                   ))}
                 </Box>

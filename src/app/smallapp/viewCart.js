@@ -49,7 +49,7 @@ const ViewCart = () => {
       const totalSum = parseFloat(cart.total.toFixed(2));
       
       // Making a fetch request to place an order with the current cart items
-      const response = await fetch('/api/customerOrders', {
+      const response = await fetch('/api/orders/customer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -64,7 +64,7 @@ const Manager = () => {
               <Box sx={{ p: 2, border: '1px dashed grey', mb: 2 }}>
                 <Typography variant="h6">
                   {/* Displaying the username and formatted order date */}
-                  Order by {order.username} on {formatDate(order.createdAt)}
+                  Ordered by {order.username} on {formatDate(order.createdAt)}
                 </Typography>
                 <Typography variant="h6">
                   {/* Displaying the total cost of the order */}
