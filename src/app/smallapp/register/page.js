@@ -1,7 +1,6 @@
 // 'use client' directive for React components in a client-side environment
 'use client';
 
-// Importing necessary modules from 'react' and '@mui/material'
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -10,25 +9,40 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import validateForm from '../validateForm';
 
-// Defining the RegisterForm component
 export default function RegisterForm({ onRegister }) {
-  // State variables to manage error and success messages
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [open, setOpen] = useState(false);
 
-  // Handle form submission
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let username = data.get('email');
-    let pass = data.get('pass');
 
-    // Call the function to run the register API
-    runRegisterAPI(`/api/acc/register`, username, pass);
+    // Validate the form
+    let errorMessage = validateForm(event);
+    setErrorMessage(errorMessage);
+
+    if (errorMessage.length > 0) {
+      setOpen(true); // Open the dialog and show the error
+    } else {
+      const data = new FormData(event.currentTarget);
+      let username = data.get('email');
+      let pass = data.get('pass');
+
+      // Call the function to run the register API
+      runRegisterAPI(`/api/acc/register`, username, pass);
+    }
   };
 
-  // Asynchronous function to call the registration API
   async function runRegisterAPI(url, username, pass) {
     const res = await fetch(url, {
       method: 'POST',
@@ -40,22 +54,20 @@ export default function RegisterForm({ onRegister }) {
     if (res.ok) {
       const data = await res.json();
       if (data.status === 'exists') {
-        // Set an error message if the username is already taken
         setErrorMessage('Username taken, please choose another.');
+        setOpen(true);
       } else if (data.status === 'registered') {
-        // Set a success message if the registration is successful
         setSuccessMessage(data.message);
-        // Auto-login after registration
         const loginRes = await fetch(`/api/acc/login?username=${username}&pass=${pass}`, {
           method: 'POST'
         });
         if (loginRes.ok) {
           const loginData = await loginRes.json();
           if (loginData.status === 'success') {
-            // Trigger the registration success action in the parent component
             onRegister();
           } else {
             setErrorMessage('Registration successful, Please return to the previous page.');
+            setOpen(true);
           }
         } else {
           console.log('Login failed:', await loginRes.text());
@@ -110,6 +122,18 @@ export default function RegisterForm({ onRegister }) {
           </Button>
         </Box>
       </Box>
+
+      <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">Error</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {errorMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>Close</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

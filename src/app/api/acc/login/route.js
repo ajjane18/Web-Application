@@ -1,61 +1,66 @@
-// Importing necessary modules from 'mongodb' and a custom session code
 import { MongoClient } from 'mongodb';
+import emailValidator from 'email-validator';
 import { getCustomSession } from '../../sessionCode';
 
-// Defining a User object with an asynchronous findOne method
 const User = {
-  async findOne({ username, pass }) {
-    // Getting the database address from environment variables
+  async findOne({ username }) {
     const url = process.env.DB_ADDRESS;
-    // Creating a new MongoClient instance
     const client = new MongoClient(url);
-    // Connecting to the MongoDB server
     await client.connect();
-    // Selecting the 'app' database
     const db = client.db('app');
-    // Finding one user in the 'login' collection that matches the given username and password
-    const user = await db.collection('login').findOne({ username, pass });
-    // Closing the connection to the database
+    const user = await db.collection('login').findOne({ username });
     await client.close();
-    // Returning the found user
     return user;
   }
 };
 
-// Exporting an asynchronous POST function to handle login requests
 export async function POST(req) {
   try {
-    // Parsing search parameters from the request URL
     const { searchParams } = new URL(req.url);
-    const username = searchParams.get('username'); // Getting the 'username' parameter
-    const pass = searchParams.get('pass'); // Getting the 'pass' parameter
+    const username = searchParams.get('username');
+    const pass = searchParams.get('pass');
 
-    // Finding the user with the given username and password
-    const user = await User.findOne({ username, pass });
+    if (!username || !pass) {
+      return new Response('Username and password are required', {
+        status: 400,
+        headers: { 'Content-Type': 'text/plain' }
+      });
+    }
 
-    // If no user is found, log the info and return a 404 response
+    // Validate and sanitize inputs
+    const sanitizedUsername = username.trim();
+    const sanitizedPass = pass.trim();
+
+    if (!emailValidator.validate(sanitizedUsername)) {
+      return new Response('Invalid email format', {
+        status: 400,
+        headers: { 'Content-Type': 'text/plain' }
+      });
+    }
+
+    const user = await User.findOne({ username: sanitizedUsername });
+
     if (!user) {
-      console.log('User not found:', { username, pass });
+      console.log('User not found:', sanitizedUsername);
       return new Response('User not found', {
         status: 404,
         headers: { 'Content-Type': 'text/plain' }
       });
     }
 
-    // Creating a custom session for the user
+    // Skip password verification and directly create a session
     const session = await getCustomSession();
-    session.username = username; // Setting the session username
-    session.role = user.acc_type; // Setting the session role
-    await session.save(); // Saving the session
+    session.username = sanitizedUsername;
+    session.role = user.acc_type;
+    await session.save();
 
     // Logging the success and returning the user role as JSON
-    console.log('User found and session created:', { username, role: session.role });
+    console.log('User found and session created:', { username: sanitizedUsername, role: session.role });
     return new Response(JSON.stringify({ role: user.acc_type }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (error) {
-    // Logging any errors that occur during the login process
     console.log('Error occurred during login:', error);
     return new Response('Internal Server Error', {
       status: 500,
