@@ -1,36 +1,18 @@
-<<<<<<< Updated upstream
 import emailValidator from 'email-validator';
-=======
-import validator from 'email-validator';
->>>>>>> Stashed changes
 
+// Function to validate the login form
 const validateLoginForm = (event) => {
   let errorMessage = '';
-
   const data = new FormData(event.currentTarget);
+  const email = data.get('username'); // Assuming the login uses email
 
-  // Get the email
-  let email = data.get('username'); // Assuming the login uses email as username
-
-  // Validate the email
-<<<<<<< Updated upstream
-  let emailCheck = emailValidator.validate(email);
-=======
-  let emailCheck = validator.validate(email);
->>>>>>> Stashed changes
-
-  // Print the status true or false
-  console.log("email status " + emailCheck);
-
-  // If it is false, add to the error message
-  if (!emailCheck) {
-    errorMessage += 'Incorrect email. ';
+  if (!emailValidator.validate(email)) {
+    errorMessage += 'Invalid email address. ';
   }
-
-  // Check for blank password
-  let pass = data.get('pass');
-  if (!pass) {
-    errorMessage += 'Password cannot be blank. ';
+  
+  const password = data.get('pass');
+  if (!password) {
+    errorMessage += 'Password cannot be blank.';
   }
 
   return errorMessage;
