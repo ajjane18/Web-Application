@@ -1,7 +1,14 @@
+<<<<<<< Updated upstream
 import { MongoClient } from 'mongodb';
 import emailValidator from 'email-validator';
 import bcrypt from 'bcrypt';
 import { getCustomSession } from '../../sessionCode';
+=======
+// Importing necessary modules
+import { MongoClient } from 'mongodb';
+import bcrypt from 'bcrypt';
+import { getCustomSession } from '../../sessionCode'; // Importing the session management
+>>>>>>> Stashed changes
 
 const User = {
   async findOne({ username }) {
@@ -18,6 +25,10 @@ const User = {
     const client = new MongoClient(url);
     await client.connect();
     const db = client.db('app');
+<<<<<<< Updated upstream
+=======
+    // Hashing the password before storing it
+>>>>>>> Stashed changes
     const hashedPass = bcrypt.hashSync(pass, 10);
     const result = await db.collection('login').insertOne({ username, pass: hashedPass, acc_type: 'customer' });
     await client.close();
@@ -36,6 +47,7 @@ export async function POST(req) {
       });
     }
 
+<<<<<<< Updated upstream
     // Validate and sanitize inputs
     const sanitizedUsername = username.trim();
     const sanitizedPass = pass.trim();
@@ -48,6 +60,9 @@ export async function POST(req) {
     }
 
     const existingUser = await User.findOne({ username: sanitizedUsername });
+=======
+    const existingUser = await User.findOne({ username });
+>>>>>>> Stashed changes
 
     if (existingUser) {
       console.log('Username already taken:', sanitizedUsername);
@@ -57,6 +72,7 @@ export async function POST(req) {
       });
     }
 
+<<<<<<< Updated upstream
     await User.insertOne({ username: sanitizedUsername, pass: sanitizedPass });
     console.log('User registered:', sanitizedUsername);
 
@@ -65,6 +81,17 @@ export async function POST(req) {
     session.role = 'customer';
     await session.save();
 
+=======
+    await User.insertOne({ username, pass });
+    console.log('User registered:', username);
+
+    // Creating a session for the newly registered user
+    const session = await getCustomSession();
+    session.username = username;
+    session.role = 'customer';
+    await session.save();
+
+>>>>>>> Stashed changes
     return new Response(JSON.stringify({ status: 'registered', message: 'User registered successfully' }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' }

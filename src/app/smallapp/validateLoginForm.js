@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 import emailValidator from 'email-validator';
+=======
+import validator from 'email-validator';
+>>>>>>> Stashed changes
 
 const validateLoginForm = (event) => {
   let errorMessage = '';
@@ -9,7 +13,11 @@ const validateLoginForm = (event) => {
   let email = data.get('username'); // Assuming the login uses email as username
 
   // Validate the email
+<<<<<<< Updated upstream
   let emailCheck = emailValidator.validate(email);
+=======
+  let emailCheck = validator.validate(email);
+>>>>>>> Stashed changes
 
   // Print the status true or false
   console.log("email status " + emailCheck);

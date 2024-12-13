@@ -13,6 +13,10 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.7",
     "@mui/material": "^6.1.7",
+<<<<<<< Updated upstream
+=======
+    "bcrypt": "^5.1.1",
+>>>>>>> Stashed changes
     "email-validator": "^2.0.4",
     "i": "^0.3.7",
     "iron-session": "^8.0.4",

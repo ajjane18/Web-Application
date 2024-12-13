@@ -1,12 +1,20 @@
 import validator from 'email-validator';
 
+<<<<<<< Updated upstream
 const validateLoginForm = (event) => {
+=======
+const validateForm = (event) => {
+>>>>>>> Stashed changes
   let errorMessage = '';
 
   const data = new FormData(event.currentTarget);
 
   // Get the email
+<<<<<<< Updated upstream
   let email = data.get('username'); // Assuming the login uses email as username
+=======
+  let email = data.get('email');
+>>>>>>> Stashed changes
 
   // Validate the email
   let emailCheck = validator.validate(email);
@@ -30,4 +38,8 @@ const validateLoginForm = (event) => {
   return errorMessage;
 };
 
+<<<<<<< Updated upstream
 export default validateLoginForm;
+=======
+export default validateForm;
+>>>>>>> Stashed changes

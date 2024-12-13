@@ -197,7 +197,7 @@ export default function MyApp() {
   // Function to handle user registration
   function handleRegister() {
     // Redirect to the account page after successful registration
-    location.href = '/app/page'; // Update this to match your actual path
+    location.href = '/app/page';
   }
 
   return (
