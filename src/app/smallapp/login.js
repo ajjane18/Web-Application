@@ -1,23 +1,31 @@
-// 'use client' directive for React components in a client-side environment
 'use client';
 
-// Importing necessary modules from 'react' and '@mui/material'
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, Container, Box, Checkbox, FormControlLabel, Link } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Container, Box, Checkbox, FormControlLabel, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Typography } from '@mui/material';
+import validateLoginForm from '../smallapp/validateLoginForm'; // Import validation function
 
-// Defining the LoginForm component
 const LoginForm = ({ onLogin }) => {
-  // State variables to manage username, password, and error message
   const [username, setUsername] = useState('');
   const [pass, setPass] = useState('');
   const [message, setMessage] = useState('');
+  const [open, setOpen] = useState(false);
 
-  // Handle form submission
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Validate the form
+    let errorMessage = validateLoginForm(event);
+    setMessage(errorMessage);
+
+    if (errorMessage.length > 0) {
+      setOpen(true); // Open the dialog and show the error
+      return;
+    }
+
     try {
-      // Sending a POST request to the login API with the username and password
       const response = await fetch(`../api/acc/login?username=${username}&pass=${pass}`, {
         method: 'POST',
       });
@@ -28,15 +36,14 @@ const LoginForm = ({ onLogin }) => {
         throw new Error(errorMessage || 'Login failed');
       }
 
-      // Parsing the JSON response
       const data = await response.json();
       onLogin(data.role); // Pass the role to the parent component
 
       console.log('Login successful:', data);
     } catch (error) {
-      // Handle errors during login
       console.log('Error during login:', error);
       setMessage(error.message || 'Login failed');
+      setOpen(true); // Open the dialog and show the error
     }
   };
 
@@ -44,7 +51,6 @@ const LoginForm = ({ onLogin }) => {
     <Container maxWidth="sm">
       <Box sx={{ height: '100vh' }}>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          {/* Text field for entering username */}
           <TextField
             margin="normal"
             required
@@ -57,7 +63,6 @@ const LoginForm = ({ onLogin }) => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          {/* Text field for entering password */}
           <TextField
             margin="normal"
             required
@@ -70,12 +75,10 @@ const LoginForm = ({ onLogin }) => {
             value={pass}
             onChange={(e) => setPass(e.target.value)}
           />
-          {/* Checkbox for remembering the user */}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          {/* Button to submit the form */}
           <Button
             type="submit"
             fullWidth
@@ -84,13 +87,25 @@ const LoginForm = ({ onLogin }) => {
           >
             Login
           </Button>
-          {/* Display an error message if login fails */}
-          {message && <p>{message}</p>}
+          {message && (
+            <Typography color="error" variant="body2">{message}</Typography>
+          )}
         </Box>
       </Box>
+
+      <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">Error</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {message}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>Close</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
 
-// Exporting the LoginForm component as the default export
 export default LoginForm;
