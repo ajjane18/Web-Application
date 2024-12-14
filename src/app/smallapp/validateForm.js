@@ -4,15 +4,19 @@ import emailValidator from 'email-validator';
 const validateForm = (event) => {
   let errorMessage = '';
   const data = new FormData(event.currentTarget);
-  const email = data.get('email'); // Assuming the form uses email
-
-  if (!emailValidator.validate(email)) {
-    errorMessage += 'Invalid email address. ';
-  }
+  const email = data.get('email');
   
+  // Validate email
+  if (!emailValidator.validate(email)) {
+    errorMessage += 'Invalid email address. Please input another. ';
+  }
+
+  // Validate password
   const password = data.get('pass');
   if (!password) {
-    errorMessage += 'Password cannot be blank.';
+    errorMessage += 'Password cannot be blank. ';
+  } else if (password.length < 6) {
+    errorMessage += 'Password must have more than 6 characters. ';
   }
 
   return errorMessage;

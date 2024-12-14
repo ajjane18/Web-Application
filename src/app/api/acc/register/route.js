@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import validator from 'validator';
-import bcrypt from 'bcryptjs'; // Use bcryptjs instead of bcrypt
+import bcrypt from 'bcryptjs';
 import { getCustomSession } from '../../sessionCode';
 
 const User = {
