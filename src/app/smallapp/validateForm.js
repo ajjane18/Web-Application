@@ -10,7 +10,7 @@ const validateForm = (event) => {
     errorMessage += 'Invalid email address. ';
   }
   
-  const password = data.get('password');
+  const password = data.get('pass');
   if (!password) {
     errorMessage += 'Password cannot be blank.';
   }
