@@ -62,7 +62,7 @@ export async function POST(req) {
     session.role = 'customer';
     await session.save();
 
-    return new Response(JSON.stringify({ status: 'registered', message: 'User registered successfully' }), {
+    return new Response(JSON.stringify({ status: 'registered', message: 'User registered successfully', redirect: '/' }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' }
     });

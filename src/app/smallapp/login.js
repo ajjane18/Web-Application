@@ -10,14 +10,13 @@ const LoginForm = ({ onLogin }) => {
   const [message, setMessage] = useState('');
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Validate the form
-    let errorMessage = validateLoginForm(event);
+    const errorMessage = validateLoginForm(event);
     setMessage(errorMessage);
 
     if (errorMessage.length > 0) {
@@ -56,7 +55,7 @@ const LoginForm = ({ onLogin }) => {
             required
             fullWidth
             id="username"
-            label="Username"
+            label="Email Address" // Changed to match email validation
             name="username"
             autoComplete="username"
             autoFocus

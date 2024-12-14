@@ -4,8 +4,8 @@ import emailValidator from 'email-validator';
 const validateLoginForm = (event) => {
   let errorMessage = '';
   const data = new FormData(event.currentTarget);
-  const email = data.get('username'); // Assuming the login uses email
-
+  const email = data.get('username');
+  
   if (!emailValidator.validate(email)) {
     errorMessage += 'Invalid email address. ';
   }

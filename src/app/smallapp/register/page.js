@@ -1,4 +1,3 @@
-// 'use client' directive for React components in a client-side environment
 'use client';
 
 import React, { useState } from 'react';
@@ -21,7 +20,6 @@ export default function RegisterForm({ onRegister }) {
   const [successMessage, setSuccessMessage] = useState('');
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleSubmit = (event) => {
@@ -51,8 +49,10 @@ export default function RegisterForm({ onRegister }) {
       },
       body: JSON.stringify({ username, pass })
     });
+
     if (res.ok) {
       const data = await res.json();
+      console.log('Registration response:', data); // Log the registration response
       if (data.status === 'exists') {
         setErrorMessage('Username taken, please choose another.');
         setOpen(true);
@@ -63,18 +63,23 @@ export default function RegisterForm({ onRegister }) {
         });
         if (loginRes.ok) {
           const loginData = await loginRes.json();
+          console.log('Login response:', loginData); // Log the login response
           if (loginData.status === 'success') {
-            onRegister();
+            console.log('Redirecting to homepage'); // Log before redirecting
+            // Redirect to homepage
+            window.location.href = '/';
           } else {
-            setErrorMessage('Registration successful, Please return to the previous page.');
+            setErrorMessage('Registration successful, but login failed. Please return to the previous page.');
             setOpen(true);
           }
         } else {
-          console.log('Login failed:', await loginRes.text());
+          setErrorMessage('Registration successful, but login failed. Please return to the previous page.');
+          setOpen(true);
         }
       }
     } else {
-      console.log('Registration failed:', await res.text());
+      setErrorMessage('Registration failed. Please try again.');
+      setOpen(true);
     }
   }
 

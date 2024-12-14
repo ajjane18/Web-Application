@@ -21,9 +21,9 @@ export async function POST(req) {
     const pass = searchParams.get('pass');
 
     if (!username || !pass) {
-      return new Response('Username and password are required', {
+      return new Response(JSON.stringify({ status: 'error', message: 'Username and password are required' }), {
         status: 400,
-        headers: { 'Content-Type': 'text/plain' }
+        headers: { 'Content-Type': 'application/json' }
       });
     }
 
@@ -32,9 +32,9 @@ export async function POST(req) {
     const sanitizedPass = pass.trim();
 
     if (!emailValidator.validate(sanitizedUsername)) {
-      return new Response('Invalid email format', {
+      return new Response(JSON.stringify({ status: 'error', message: 'Invalid email format' }), {
         status: 400,
-        headers: { 'Content-Type': 'text/plain' }
+        headers: { 'Content-Type': 'application/json' }
       });
     }
 
@@ -42,9 +42,9 @@ export async function POST(req) {
 
     if (!user) {
       console.log('User not found:', sanitizedUsername);
-      return new Response('User not found', {
+      return new Response(JSON.stringify({ status: 'error', message: 'User not found' }), {
         status: 404,
-        headers: { 'Content-Type': 'text/plain' }
+        headers: { 'Content-Type': 'application/json' }
       });
     }
 
@@ -56,15 +56,15 @@ export async function POST(req) {
 
     // Logging the success and returning the user role as JSON
     console.log('User found and session created:', { username: sanitizedUsername, role: session.role });
-    return new Response(JSON.stringify({ role: user.acc_type }), {
+    return new Response(JSON.stringify({ status: 'success', role: user.acc_type }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (error) {
     console.log('Error occurred during login:', error);
-    return new Response('Internal Server Error', {
+    return new Response(JSON.stringify({ status: 'error', message: 'Internal Server Error' }), {
       status: 500,
-      headers: { 'Content-Type': 'text/plain' }
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 }
